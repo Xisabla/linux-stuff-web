@@ -8,7 +8,7 @@
 man sudo # Affiche la documentation de la commande 'sudo'
 ```
 
-### Droits administrateurs (sudo) & permissions
+### Droits administrateurs (sudo) & permissions
 
 - Utilisateur "normal": peut modifier du contenu dans ses dossiers, même à travers des ressources ou programmes
 
@@ -79,7 +79,7 @@ Quelques petits truc sur les dossies et "chemins":
 - `/etc/` contient généralement les fichiers de configuration de programmes
 - `/media/` contient l'accés aux périphériques (clé USB, partitions secondaires, CD, ...)
 
-### Gestionnaire de paquet (apt-get)
+### Gestionnaire de paquet (apt-get)
 
 ```bash
 sudo apt-get install paquet # Installe un paquet
@@ -102,7 +102,7 @@ sudo apt-get autoremove --purge paquet # Combot ultime pour désinstaller compl
 
 **Note**: Les mises à jours et installations nécessites une connection internet (obvious)
 
-### Nano, l'éditeur de texte de la console
+### Nano, l'éditeur de texte de la console
 
 ![Nano editor](./img/nano.png)
 
@@ -116,7 +116,7 @@ sudo nano fichier # Edite un fichier avec les droits administrateurs
 
 ## Serveur web
 
-### Fonctionnement & explications
+### Fonctionnement & explications
 
 ![Web](./img/web.png)
 
@@ -124,13 +124,15 @@ sudo nano fichier # Edite un fichier avec les droits administrateurs
 - **PHP**: Language qui va générer une page *HTML* pour la renvoyer au serveur *apache* qui la renvoie au *client*
 - **MySQL**: Base de donnée avec laquelle *PHP* va communiquer
 
-### Configuration
-
-#### Apache
+### Configuration apache
 
 > /etc/apache2/apache2.conf
 
 [apache2.conf](apache2.conf)
+
+> /etc/apache2/sites-enabled/000-default.conf
+
+[000-default.conf](000-default.conf)
 
 Modifier les permissions:
 
@@ -138,22 +140,15 @@ Modifier les permissions:
 sudo chown $(whoami):www-data /var/www -R
 ```
 
-Dans certains cas ça ne marche pas trop, du coup il existe une petite méthode assez sympa:
+### Installation de wordpress
 
 ```bash
-mkdir ~/www # On crée un dossier pour le serveur dans notre dossier perso
-cd /var/www # On se rend dans le dossier serveur de base
-sudo ln -ls ~/www www # On crée un lien symbolique liant au dossier dans notre dossier perso
-# Etant donné qu'on a les permissions dans notre dossier perso, cette manip régle pas mal de soucis
+sudo ln -s /usr/share/phpmyadmin /var/www/phpmyadmin
 ```
 
-#### PHP
+Se connecter sur phpmyadmin (identifiant: root, mot de passe: choit lors de l'installation) et créer la  base de donnée "wordpress"
 
-> /etc/php/7.0/apache2/php.ini
-
-[php.ini](php.ini)
-
-### Installation de wordpress
+`>>` http://localhost/phpmyadmin/
 
 ```bash
 cd ~ # On se rend dans le dossier ou se trouve l'archive de wordpress
@@ -161,3 +156,15 @@ tar zxvf latest.tar.gz # On extrait l'archive
 sudo mv wordpress /var/www/wordpress # On déplace le dossier wordpress dans notre répertoire serveur
 # Il vaudrait même mieux le mettre dans ~/www
 ```
+
+Suivre les étapes (identifiant et mot de passe comme précédement pour la base de donnée)
+
+`>>` http://localhost/wordpress
+
+Pour le fichier de configuration wordpress, copier le texte donné puis:
+
+```bash
+sudo nano /var/www/wordpress/wp-config.php # Coller le code copié ici
+```
+
+Puis ensuite la reste est à vous ;)
