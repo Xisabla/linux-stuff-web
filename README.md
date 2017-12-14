@@ -155,6 +155,7 @@ cd ~ # On se rend dans le dossier ou se trouve l'archive de wordpress
 tar zxvf latest.tar.gz # On extrait l'archive
 sudo mv wordpress /var/www/wordpress # On déplace le dossier wordpress dans notre répertoire serveur
 # Il vaudrait même mieux le mettre dans ~/www
+sudo service apache2 restart
 ```
 
 Suivre les étapes (identifiant et mot de passe comme précédement pour la base de donnée)
